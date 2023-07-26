@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+</head>
+<body>
+    <div id="app">
+        <h1>{{Message}}</h1>
+        <h2>{{Welcome}}</h2>
+        <h3>{{Message.split("").join("-")}}</h3>
+        <h4>{{Status? "This is true" : "This is false"}}</h4>
+        <h4>{{modifyYear}}</h4>
+    </div>
+    <div class='appp'>
+        <h1>{{frontEndFramework}}</h1>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script>
+
+    let app = new Vue({
+        el:'#app',
+        data:{
+            Message:"hello Vue",
+            Welcome:"Welcome From FrontEnd",
+            Status:true,
+            Year:2020,
+        },
+    computed:{
+        modifyYear: function(){
+            return parseInt(this.Year) + 200;
+        }
+    }
+    });
+
+    let appp = new Vue({
+        el:".appp",
+        data:{
+            frontEndFramework:"The Most Popular Frontend Framework",
+        }
+    })
+
+</script>
+</html>

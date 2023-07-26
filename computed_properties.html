@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       
+    </style>
+</head>
+<body>
+    <div id="testing">
+        <h1>{{message}}</h1>
+
+        <h2>{{getLength}}</h2>
+
+        <h1 class="reverse">{{reverse}}</h1>
+        <button @click="click"> Button</button>
+        <h1>{{now}}</h1>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+        let app = new Vue({
+            el: '#testing',      
+            data:{
+                message: 'hello vue'
+            },
+            methods: {
+                click(){
+                    alert('click me?'); // Method OBJ // when binding if doesnt include () is also ok!!!!
+                },
+                
+            },
+            computed:{
+                getLength(){
+                    return this.message.length // Must  Return Functions
+                },
+                
+                reverse(){
+                    // return this.message.split("").reverse().join("");
+                    let splitArr    = this.message.split("");
+                    let reverseArr  = splitArr.reverse();
+                    let reversedMsg = reverseArr.join("");
+                    return reversedMsg;
+                },
+                now(){
+                    return Date.now();
+                }
+            }
+        })
+    </script>
+</html>

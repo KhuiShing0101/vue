@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conditional Rendering</title>
+</head>
+<body>
+    <div id="testing"> 
+        <h1 v-if="status==true"> Hello Vue Js</h1>
+        <h1 v-else>I am False</h1>
+        <h2 v-if ="fruite=='apple'">apple</h2>
+        <h2 v-else-if ="fruite=='banana'">banana</h2>
+        <h2 v-else-if ="fruite=='orange'">orange</h2>
+        <h2 v-else >no fruits</h2>
+
+        <h1 v-show ="status==true"> Ok</h1>
+    </div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+        let app = new Vue({
+            el  :'#testing',
+            data: {
+                status : true,
+                fruite  : 'apple'
+            }
+
+        })
+
+    </script>
+</html>

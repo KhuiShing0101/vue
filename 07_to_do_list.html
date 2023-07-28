@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       
+    </style>
+</head>
+<body>  
+    <h3>To do list</h3>
+    <div id="testing">
+        <div>
+            <input type="text" placeholder="Enter Names"   v-model="studentData.name" >
+            <small  v-if="validationStatus.name" style="color: red;"> Name is required!</small> <br>
+
+            <input type="text" placeholder="Enter Skills" v-model="studentData.skill" >
+            <small  v-if="validationStatus.skill"     style="color: red;"> Skill is required!</small> <br>
+
+            <br>
+            <button @click="create()">Create</button>
+        </div> 
+        <br>
+            <table border="1px">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>name</th>
+                        <th>skill</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="studentDetail in studentDetails">
+                        <td>{{studentDetail.id}}</td>
+                        <td>{{studentDetail.name}}</td>
+                        <td>{{studentDetail.skill}}</td>
+                    </tr>
+                </tbody>
+            </table>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+        let app = new Vue({
+            el: '#testing',      
+            data:{
+                studentData :{
+                        name:'',
+                        skill:'',
+                },
+                validationStatus :{
+                    name:false,
+                    skill:false,
+                },
+                studentDetails:[],
+            },
+            methods:{
+                
+                    create(){
+
+                    this.checkValad()
+                        if(!this.validationStatus.name && !this.validationStatus.skill){
+                            this.studentDetails.push({
+                            id:this.studentDetails.length + 1,
+                            name:this.studentData.name,
+                            skill:this.studentData.skill,
+                        });
+                        }
+
+                    this.clear()
+
+                    },
+
+                    checkValad(){
+                        this.validationStatus.name = this.studentData.name =='' ? true : false; 
+                        this.validationStatus.skill = this.studentData.skill =='' ? true : false;
+                    },
+
+                    clear(){
+                        this.studentData.name  = '',
+                        this.studentData.skill = ''
+                    },
+
+                }
+            });
+    </script>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       
+    </style>
+</head>
+<body>
+    <div id="testing">
+        <input v-model="message" type="text" id="" name="">
+        <h1>looping</h1>
+        <ul>
+            <li v-for="(value,key) in numbers">{{key}} | {{value}}</li>
+        </ul>
+        <li v-for="student in students">{{student.gender}}</li>
+        <table border="1px">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Gender</th>
+            </tr>
+            <tr v-for="student in students">
+                <td>{{student.id}}</td>
+                <td>{{student.name}}</td>
+                <td>{{student.gender}}</td>
+            </tr>
+            
+        </table>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+        let app = new Vue({
+            el: '#testing',      
+            data:{
+                message : '',
+                numbers : ['one','two','three'],
+                students   : [
+                    { id:'1',name:'maw maw',gender:'female'},
+                    { id:'2',name:'aung aung',gender:'male'},
+                    { id:'3',name:'Zin zin',gender:'female'},
+                    { id:'4',name:'Mg Mg',gender:'male'},
+                ]
+            },
+        })
+    </script>
+</html>

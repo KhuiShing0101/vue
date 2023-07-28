@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container" id="app">
+        <div class="text-center my-4">
+            <h2>Calculator (Vue Js)</h2>
+        </div>
+
+        <div class="row my-5 justify-content-center">
+            <div class="col-12 col-sm-8 col-md-6">
+                <div class="card" style="background-color: darkgray;">
+                    <div class="card-body justify-content-center">
+                        <div class="border p-3 rounded d-flex justify-content-end align-content-center bg-dark"
+                            style="color: white;">
+                            {{output}}
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-12 mb-3 mt-3">
+                                <input type="number" class="form-group" v-model="userInput.firstNumber" placeholder="Enter First Number">
+                            </div>
+                            <div class="form-group col-12 mb-3 mt-3">
+                                <input type="number" class="form-group" v-model="userInput.secondNumber" placeholder="Enter Second Number">
+                            </div>
+
+                            <div class="d-flex justify-content-around">
+                                <div class="form-control">
+                                    <select v-model="userInput.operators" id="exampleFormControlSelect1" class="form-control">
+                                        <option value=""> Choose Option...</option>
+                                        <option value="+">+</option>
+                                        <option value="-">-</option>
+                                        <option value="*">*</option>
+                                        <option value="/">/</option>
+                                    </select>
+                                </div>
+                                <div class="" style="color:black;">
+                                    <button class="btn btn-primary" @click="calculate()">Cal</button>
+                                </div>
+                                <div class="" style="color: black;">
+                                    <button class="btn btn-warning" @click="clearButton()">Clear</button>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <button class="btn btn-danger mt-3 w-100" @click="saveHistroy()">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <h5 class="text-white">History</h5>
+                        <div class="text-muted">
+                            Record...
+                            <div v-for="history in histories">
+                                {{history}}
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+        let app = new Vue({
+            el: '#app',      
+            data:{
+                userInput:{
+                        firstNumber:'',
+                        secondNumber:'',
+                        operators   :''
+                    },
+
+                output:0,
+
+                studentData :{
+                        name:'',
+                        skill:'',
+                },
+
+                validationStatus :{
+                    name:false,
+                    skill:false,
+                },
+                studentDetails:[],
+                histories:[]
+            },
+            methods:{
+                calculate(){
+                    let result = this.computing();
+                    this.output = `${result}`;
+                    this.cacheClear()
+                },
+                computing(){
+                        let num1 = parseInt(this.userInput.firstNumber) // to int
+                        let num2 = parseInt(this.userInput.secondNumber)
+                    switch(this.userInput.operators)
+                    {
+                        case "+" :
+                            return num1 + num2
+                        break;
+                        
+                        case "-" :
+                            return num1 - num2
+                        break;
+                        
+                        case "*" :
+                            return num1 * num2
+                        break;
+
+                        case "/" :
+                            return num1 / num2
+                        break;
+
+                        case "default": alert("something Wrong")
+                    }
+                    },
+
+                cacheClear(){
+                    this.userInput.firstNumber = '',
+                    this.userInput.secondNumber = '',
+                    this.userInput.operators    =''
+                },
+
+                clearButton(){
+                    this.cacheClear(),
+                    this.output = 0
+                },
+
+                create(){
+                    this.checkValad()
+                        if(!this.validationStatus.name && !this.validationStatus.skill){
+                            this.studentDetails.push({
+                            id:this.studentDetails.length + 1,
+                            name:this.studentData.name,
+                            skill:this.studentData.skill,
+                        });
+                        }
+                    this.clear()
+                },
+
+                checkValad(){
+                    this.validationStatus.name = this.studentData.name =='' ? true : false; 
+                    this.validationStatus.skill = this.studentData.skill =='' ? true : false;
+                },
+
+                clear(){
+                    this.studentData.name  = '',
+                    this.studentData.skill = ''
+                },
+
+                saveHistroy(){
+                    this.histories.push(this.output),
+                    this.output = 0 
+                }
+
+                }
+            });
+    </script>
+</html>

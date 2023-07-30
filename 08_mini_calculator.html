@@ -27,20 +27,25 @@
                         <div class="row">
                             <div class="form-group col-12 mb-3 mt-3">
                                 <input type="number" class="form-group" v-model="userInput.firstNumber" placeholder="Enter First Number">
+                                <small v-if="validationStatus.firstNumber" style="color: red;"> FirstNumber is required </small>
                             </div>
+
                             <div class="form-group col-12 mb-3 mt-3">
                                 <input type="number" class="form-group" v-model="userInput.secondNumber" placeholder="Enter Second Number">
+                                <small v-if="validationStatus.secondNumber" style="color: red;"> Second Number is required </small>
                             </div>
 
                             <div class="d-flex justify-content-around">
                                 <div class="form-control">
-                                    <select v-model="userInput.operators" id="exampleFormControlSelect1" class="form-control">
+                                    <select v-model="userInput.operators" id="exampleFormControlSelect1" 
+                                    class="form-control">
                                         <option value=""> Choose Option...</option>
                                         <option value="+">+</option>
                                         <option value="-">-</option>
                                         <option value="*">*</option>
                                         <option value="/">/</option>
                                     </select>
+                                    <small v-if="validationStatus.operators"style="color: red;">Choose Option is required</small>
                                 </div>
                                 <div class="" style="color:black;">
                                     <button class="btn btn-primary" @click="calculate()">Cal</button>
@@ -50,7 +55,7 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <button class="btn btn-danger mt-3 w-100" @click="saveHistroy()">Save</button>
+                                <button class="btn btn-danger mt-3 w-100" @click="saveHistroy() ">Save</button>
                             </div>
                         </div>
                     </div>
@@ -82,24 +87,34 @@
 
                 output:0,
 
-                studentData :{
-                        name:'',
-                        skill:'',
-                },
-
                 validationStatus :{
-                    name:false,
-                    skill:false,
+                    firstNumber:false,
+                    secondNumber:false,
+                    operators:false,
                 },
-                studentDetails:[],
-                histories:[]
+                histories:[],
+
+                saveStatus :false
             },
             methods:{
+
                 calculate(){
-                    let result = this.computing();
-                    this.output = `${result}`;
-                    this.cacheClear()
+                    this.checkValidation();
+                    if(!this.validationStatus.operators && !this.validationStatus.firstNumber && !this.validationStatus.secondNumber)
+                    {     
+                        let result = this.computing();
+                        this.output = `${result}`;
+                        this.saveStatus = true;
+                        this.cacheClear()
+                    }
                 },
+
+                checkValidation(){
+                    this.validationStatus.firstNumber  = this.userInput.firstNumber  === '' ? true : false;
+                    this.validationStatus.secondNumber = this.userInput.secondNumber === '' ? true : false;
+                    this.validationStatus.operators    = this.userInput.operators    === '' ? true : false; 
+                },
+
                 computing(){
                         let num1 = parseInt(this.userInput.firstNumber) // to int
                         let num2 = parseInt(this.userInput.secondNumber)
@@ -121,7 +136,7 @@
                             return num1 / num2
                         break;
 
-                        case "default": alert("something Wrong")
+                        default: alert("something Wrong")
                     }
                     },
 
@@ -133,34 +148,17 @@
 
                 clearButton(){
                     this.cacheClear(),
-                    this.output = 0
-                },
-
-                create(){
-                    this.checkValad()
-                        if(!this.validationStatus.name && !this.validationStatus.skill){
-                            this.studentDetails.push({
-                            id:this.studentDetails.length + 1,
-                            name:this.studentData.name,
-                            skill:this.studentData.skill,
-                        });
-                        }
-                    this.clear()
-                },
-
-                checkValad(){
-                    this.validationStatus.name = this.studentData.name =='' ? true : false; 
-                    this.validationStatus.skill = this.studentData.skill =='' ? true : false;
-                },
-
-                clear(){
-                    this.studentData.name  = '',
-                    this.studentData.skill = ''
+                    this.output = 0,
+                    this.histories = [],
+                    this.validationStatus = true;
                 },
 
                 saveHistroy(){
+                    if(this.saveStatus){
                     this.histories.push(this.output),
                     this.output = 0 
+                    }
+                    this.saveStatus = false;
                 }
 
                 }
